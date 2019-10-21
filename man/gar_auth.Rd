@@ -8,7 +8,7 @@ gar_auth(token = NULL, email = NULL,
   scopes = getOption("googleAuthR.scopes.selected"),
   app = gar_oauth_app(), cache = gargle::gargle_oauth_cache(),
   use_oob = gargle::gargle_oob_default(), package = "googleAuthR",
-  new_user = NULL)
+  new_user = NULL, skip_fetch = FALSE)
 }
 \arguments{
 \item{token}{an actual token object or the path to a valid token stored as an
@@ -27,6 +27,8 @@ gar_auth(token = NULL, email = NULL,
 \item{package}{The name of the package authenticating}
 
 \item{new_user}{Deprecated, not used}
+
+\item{skip_fetch}{Flag to control if you want to skip token_fetch}
 }
 \value{
 an OAuth token object, specifically a
