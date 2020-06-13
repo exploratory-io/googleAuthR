@@ -11,6 +11,7 @@
 #' @param cache Where to store authentication tokens
 #' @param use_oob Whther to use OOB browserless authetication
 #' @param new_user Deprecated, not used
+#' @param skip_fetch Flag to control if you want to skip token_fetch
 #'
 #' @return an OAuth token object, specifically a
 #'   \code{\link[=Token-class]{Token2.0}}, invisibly
@@ -51,7 +52,8 @@ gar_auth <- function(token = NULL,
                      cache = gargle::gargle_oauth_cache(),
                      use_oob = gargle::gargle_oob_default(),
                      package = "googleAuthR",
-                     new_user = NULL) {
+                     new_user = NULL,
+                     skip_fetch = FALSE) {
   
   if(!is.null(new_user)){
     warning("Argument new_user is deprecated and will be removed next release.")
@@ -84,16 +86,17 @@ gar_auth <- function(token = NULL,
     # sets return value for gar_oauth_app()
     make_app()
   }
-  
-  token <- token_fetch(
-    email = email,
-    token = token,
-    scopes = scopes,
-    app = gar_oauth_app(),
-    package = package,
-    cache = cache,
-    use_oob = use_oob
-  )
+  if(!skip_fetch) {
+    token <- token_fetch(
+      email = email,
+      token = token,
+      scopes = scopes,
+      app = gar_oauth_app(),
+      package = package,
+      cache = cache,
+      use_oob = use_oob
+    )
+  }
   
   if(!is.token2.0(token)){
     stop("Could not authenticate via any gargle cred function", call. = FALSE)
