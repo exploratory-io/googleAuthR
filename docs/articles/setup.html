@@ -37,12 +37,19 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAuthR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../articles/setup.html">
+    <span class="fa fa-child fa-lg"></span>
+     
+    Setup
+  </a>
+</li>
 <li>
   <a href="../articles/google-authentication-types.html">
     <span class="fa fa-sign-in fa-lg"></span>
@@ -118,7 +125,7 @@
       <h1 data-toc-skip>Google API Setup</h1>
                         <h4 class="author">Mark Edmondson</h4>
             
-            <h4 class="date">2020-04-23</h4>
+            <h4 class="date">2021-03-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAuthR/blob/master/vignettes/setup.Rmd"><code>vignettes/setup.Rmd</code></a></small>
       <div class="hidden name"><code>setup.Rmd</code></div>
@@ -158,12 +165,12 @@
 <ol start="3" style="list-style-type: decimal">
 <li>Click ‘Create a new Client ID’, and choose “Web Application”.</li>
 <li>Download the web client JSON file</li>
-<li>Add the URL of where your Shiny app will run to the crendetials, with no port number. e.g. <a href="https://mark.shinyapps.io/searchConsoleRDemo/" class="uri">https://mark.shinyapps.io/searchConsoleRDemo/</a>
+<li>Add the URL of where your Shiny app will run to the credentials, with no port number. e.g. <code>https://your-account.shinyapps.io/your-shiny-app/</code>
 </li>
 <li>And/Or also put in localhost or 127.0.0.1 with a port number for local testing. Remember the port number you use as you will need it later to launch the app e.g. <code>http://127.0.0.1:1221</code>
 </li>
 <li>Set the <code>GAR_CLIENT_WEB_JSON</code> environment argument (via <code>.Renviron</code> or otherwise) to the full path file location of the JSON file (see <code><a href="../reference/gar_set_client.html">gar_set_client()</a></code> for other options)</li>
-<li>Run the app locally specifying the port number you used e.g. <code><a href="https://rdrr.io/pkg/shiny/man/runApp.html">shiny::runApp(port=1221)</a></code>
+<li>Run the app locally specifying the port number you used e.g. <code><a href="https://shiny.rstudio.com/reference/shiny/latest/runApp.html">shiny::runApp(port=1221)</a></code>
 </li>
 <li>Or deploy to your Shiny Server that deploys to web port (80 or 443).</li>
 </ol>

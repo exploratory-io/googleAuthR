@@ -4,21 +4,23 @@
 \alias{gar_discovery_api}
 \title{Get meta data details for specified Google API}
 \usage{
-gar_discovery_api(api, version)
+gar_discovery_api(api, version, a_url = NULL)
 }
 \arguments{
 \item{api}{The API to fetch}
 
 \item{version}{The API version to fetch}
+
+\item{a_url}{Supply your own discovery URL, for private APIs only}
 }
 \value{
 Details of the API
 }
 \description{
-Does not require authentication
+Download the discovery document for an API
 }
 \seealso{
-\url{https://developers.google.com/discovery/v1/reference/apis/getRest}
+\url{https://developers.google.com/discovery/v1/getting_started}
 
 Other Google Discovery API functions: 
 \code{\link{gar_create_api_objects}()},

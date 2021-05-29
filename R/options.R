@@ -1,5 +1,13 @@
 .onLoad <- function(libname, pkgname) {
   
+  .auth <<- gargle::init_AuthState(
+    package = "googleAuthR",
+    auth_active = TRUE
+    #app = NULL,
+    #api_key = NULL,
+    #cred = NULL
+  )
+  
   sys_or_null <- function(x){
     sys <- Sys.getenv(x)
     if (sys == "") return(NULL)
@@ -31,7 +39,7 @@
       paste0(sample(c(1:9, LETTERS, letters), 20, replace = TRUE), collapse = ''),
     googleAuthR.tryAttempts = 5,
     googleAuthR.HttrRetryTimes = 3,
-    googleAuthR.HttrRetryTerminateOn = c(400,401,402,403,404,405,406,407,408,
+    googleAuthR.HttrRetryTerminateOn = c(400,401,402,403,404,405,406,407,
                                          409,410,411,412,413,414,415,416,417,
                                          418,421,422,423,424,426,428,
                                          431,451),

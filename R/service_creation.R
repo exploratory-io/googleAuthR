@@ -15,8 +15,8 @@
 #' @seealso \url{https://cloud.google.com/iam/docs/creating-managing-service-accounts#iam-service-accounts-create-rest}
 #' 
 #' @export
+#' @family IAM functions
 #' @examples 
-#' 
 #' \dontrun{
 #' 
 #' gar_service_provision("my-service-account", 
@@ -32,7 +32,7 @@ gar_service_provision <- function(accountId,
   if(email == ""){
     email <- NULL
   }
-  gar_auth(email = email)
+  gar_auth(email = email, cache = FALSE)
   created <- gar_service_create(accountId, projectId = projectId)
     
   gar_service_grant_roles(created$email,
@@ -52,7 +52,12 @@ gar_service_provision <- function(accountId,
 #' @param serviceName Name of service account
 #' @param serviceDescription Description of service account
 #' 
+#' @return If it already exists, returns it via \link{gar_service_get}, else creates the service key
+#' 
+#' @seealso Combine these functions to provision emails in one step with \link{gar_service_provision}
+#' 
 #' @export
+#' @family IAM functions
 gar_service_create <- function(
   accountId,
   projectId,
@@ -60,24 +65,40 @@ gar_service_create <- function(
   serviceDescription = "A service account created via googleAuthR"
 ){
   
-  the_url <- sprintf(
-    "https://iam.googleapis.com/v1/projects/%s/serviceAccounts",
-    projectId
-  )
-  
-  body <- list(
-    accountId = accountId,
-    serviceAccount = list(
-      description = serviceDescription,
-      displayName = serviceName
-    )
-  )
-  
-  myMessage("Creating service accountId - ", accountId, level = 3)
-  api_call <- gar_api_generator(the_url, "POST", 
-                                data_parse_function = function(x) x)
-  
-  api_call(the_body = body)
+  candidate <- sprintf("%s@%s.iam.gserviceaccount.com",
+                       accountId, projectId)
+
+  o <- tryCatch(
+    gar_service_get(candidate, projectId = projectId), 
+    error = function(err){
+
+         # watch out if they update the error message #197
+         need_one <- grepl(paste("Not found"), err$message)
+         if(need_one){
+           myMessage("Creating new service account: ", candidate, level = 3)
+           the_url <- sprintf(
+             "https://iam.googleapis.com/v1/projects/%s/serviceAccounts",
+             projectId
+           )
+           
+           body <- list(
+             accountId = accountId,
+             serviceAccount = list(
+               description = serviceDescription,
+               displayName = serviceName
+             )
+           )
+           
+           myMessage("Creating service accountId - ", accountId, level = 3)
+           api_call <- gar_api_generator(the_url, "POST", 
+                                         data_parse_function = function(x) x)
+           
+           api_call(the_body = body)
+         } else {
+           stop(err$message)
+         }
+      })
+  o
   
 }
 
@@ -139,10 +160,33 @@ extract_existing <- function(bs){
 #' 
 #' @details 
 #' 
+#' If you supply an accountId to \code{gar_service_get_roles} then it will return only those roles that accountId has.
+#' 
 #' @export
 #' @rdname gar_service_create
 #' @seealso \url{https://cloud.google.com/resource-manager/reference/rest/v1/projects/setIamPolicy}
-gar_service_get_roles <- function(projectId){
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # all roles
+#' projectId <- gar_set_client(
+#'                 json = Sys.getenv("GAR_CLIENT_JSON"), 
+#'                 scopes = "https://www.googleapis.com/auth/cloud-platform")
+#' gar_service_get_roles(projectId)
+#' 
+#' # roles for one accountId
+#' gar_service_get_roles(
+#'     projectId, 
+#'     accountId = "1080525199262@cloudbuild.gserviceaccount.com")
+#' 
+#' }
+gar_service_get_roles <- function(
+  projectId, 
+  accountId = NULL, 
+  type = c("serviceAccount", "user", "group")){
+  
+  type <- match.arg(type)
   
   the_url <- sprintf(
     "https://cloudresourcemanager.googleapis.com/v1/projects/%s:getIamPolicy",
@@ -153,7 +197,20 @@ gar_service_get_roles <- function(projectId){
   api_call <- gar_api_generator(the_url, "POST", 
                                 data_parse_function = function(x) x$bindings)
   
-  api_call()
+  existing_roles <- api_call()
+  
+  if(!is.null(accountId)){
+    # return roles only for this accountId
+    check_email <- paste0(type, ":", accountId)
+    present <- unlist(lapply(existing_roles$members,
+                             function(x) check_email %in% x))
+    present_roles <- existing_roles[present, "role"]
+    existing_roles <- data.frame(roles = present_roles, 
+                                 members = check_email,
+                                 stringsAsFactors = FALSE)
+  }
+  
+  existing_roles
   
 }
 
@@ -172,11 +229,16 @@ gar_service_get_roles <- function(projectId){
 #'  gar_auth()
 #'  gar_service_create("test12345678", "my-project")
 #'  
+#'  gar_service_get("test12345678@my-project.iam.gserviceaccount.com", 
+#'                  projectId = "my-project")
+#'  
 #'  gar_service_grant_roles("test12345678@my-project.iam.gserviceaccount.com",
 #'                          role = "roles/editor",
 #'                          projectId = "my-project")
 #'  
 #'  gar_service_key("test12345678", "my-project", "my-auth.json")
+#'  
+#'  gar_service_list("my-project")
 #'  
 #'  gar_service_key_list("test12345678", "my-project")
 #' }
@@ -218,6 +280,33 @@ gar_service_key_list <- function(accountId,
   
   api_call <- gar_api_generator(the_url, "GET", 
                                 data_parse_function = function(x) x$keys)
+  
+  api_call()
+}
+
+#' @rdname gar_service_create
+#' @export
+gar_service_list <- function(projectId){
+  the_url <- sprintf(
+    "https://iam.googleapis.com/v1/projects/%s/serviceAccounts", projectId
+  )
+  
+  api_call <- gar_api_generator(the_url, "GET", 
+                                data_parse_function = function(x) x$accounts)
+  
+  api_call()
+}
+
+#' @rdname gar_service_create
+#' @export
+gar_service_get <- function(accountId, projectId){
+  the_url <- sprintf(
+    "https://iam.googleapis.com/v1/projects/%s/serviceAccounts/%s", 
+    projectId, accountId
+  )
+  
+  api_call <- gar_api_generator(the_url, "GET", 
+                                data_parse_function = function(x) x)
   
   api_call()
 }

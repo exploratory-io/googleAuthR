@@ -13,7 +13,7 @@ googleAuth(
   login_class = "btn btn-primary",
   logout_class = "btn btn-default",
   access_type = c("online", "offline"),
-  approval_prompt = c("auto", "force"),
+  prompt = c("consent", "select_account", "both", "none"),
   revoke = FALSE
 )
 }
@@ -34,7 +34,7 @@ googleAuth(
 
 \item{access_type}{Online or offline access for the authentication URL}
 
-\item{approval_prompt}{Whether to show the consent screen on authentication}
+\item{prompt}{What type of consent screen on authentication}
 
 \item{revoke}{If TRUE a user on logout will need to re-authenticate}
 }

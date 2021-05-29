@@ -90,16 +90,15 @@
 #   
 # })
 # 
-# test_that("A batch call works", {
-#   skip_on_cran()
-#   ggg <- gar_batch(list(list_websites(), google_analytics_account_list()))
-#   
-#   expect_s3_class(ggg[[1]], "data.frame")
-#   expect_equal(ggg[[2]]$kind, "analytics#accountSummaries")
-# })
 # 
 # test_that("A walk batch call works but with no returned data", {
 #   skip_on_cran()
 #   gg <- test_walk()
 #   expect_type(gg, "list")
 # })
+
+# tests batching with googleAnalyticsR
+# library(googleAnalyticsR)
+# accountId <- 54019251
+# test_email_adds <- c("mark@iihnordic.com", "iihmarkedmondson@gmail.com")
+# done <- ga_users_add(test_email_adds,permissions = "EDIT", accountId = accountId)

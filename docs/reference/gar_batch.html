@@ -82,13 +82,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAuthR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/setup.html">
+    <span class="fa fa-child fa-lg"></span>
+     
+    Setup
+  </a>
+</li>
+<li>
   <a href="../articles/google-authentication-types.html">
     <span class="fa fa-sign-in fa-lg"></span>
      
@@ -170,7 +177,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>gar_batch</span>(
-  <span class='no'>call_list</span>,
+  <span class='no'>function_list</span>,
   <span class='no'>...</span>,
   <span class='kw'>batch_endpoint</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"googleAuthR.batch_endpoint"</span>, <span class='kw'>default</span> <span class='kw'>=</span>
     <span class='st'>"https://www.googleapis.com/batch"</span>)
@@ -180,7 +187,7 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>call_list</th>
+      <th>function_list</th>
       <td><p>a list of functions from <code><a href='gar_api_generator.html'>gar_api_generator</a></code></p></td>
     </tr>
     <tr>

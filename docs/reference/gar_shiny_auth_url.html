@@ -82,13 +82,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAuthR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/setup.html">
+    <span class="fa fa-child fa-lg"></span>
+     
+    Setup
+  </a>
+</li>
+<li>
   <a href="../articles/google-authentication-types.html">
     <span class="fa fa-sign-in fa-lg"></span>
      
@@ -176,7 +183,7 @@
   <span class='kw'>client.secret</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"googleAuthR.webapp.client_secret"</span>),
   <span class='kw'>scope</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"googleAuthR.scopes.selected"</span>),
   <span class='kw'>access_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"online"</span>, <span class='st'>"offline"</span>),
-  <span class='kw'>approval_prompt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"auto"</span>, <span class='st'>"force"</span>)
+  <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"consent"</span>, <span class='st'>"select_account"</span>, <span class='st'>"both"</span>, <span class='st'>"none"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,7 +214,7 @@
       <td><p>whether to keep the token</p></td>
     </tr>
     <tr>
-      <th>approval_prompt</th>
+      <th>prompt</th>
       <td><p>Auto-login if user is recognised or always force signin</p></td>
     </tr>
     </table>

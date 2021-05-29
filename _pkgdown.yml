@@ -13,9 +13,12 @@ navbar:
   title: googleAuthR
   type: inverse
   left:
+    - text: "Setup"
+      icon: fa-child fa-lg
+      href: articles/setup.html
     - text: "Authentication"
       icon: fa-sign-in fa-lg
-      href: "articles/google-authentication-types.html"
+      href: articles/google-authentication-types.html
     - text: "Building Google APIs"
       icon: fa-wrench fa-lg
       href: articles/building.html
@@ -50,6 +53,10 @@ reference:
       - gar_check_existing_token
       - gar_token_info
       - gar_set_client
+  - title: "Service accounts"
+    contents:
+      - gar_auth_service
+      - matches("gar_service")
   - title: "Shiny authentication helpers"
     contents:
       - with_shiny
@@ -80,5 +87,8 @@ reference:
       - gar_create_package
       - gar_create_api_objects
       - gar_create_api_skeleton
+  - title: "Setup Wizard functions"
+    contents:
+      - matches("gar_setup")
 
       

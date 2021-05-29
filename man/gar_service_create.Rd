@@ -6,6 +6,8 @@
 \alias{gar_service_get_roles}
 \alias{gar_service_key}
 \alias{gar_service_key_list}
+\alias{gar_service_list}
+\alias{gar_service_get}
 \title{Work with service accounts via the API}
 \usage{
 gar_service_create(
@@ -22,7 +24,11 @@ gar_service_grant_roles(
   type = c("serviceAccount", "user", "group")
 )
 
-gar_service_get_roles(projectId)
+gar_service_get_roles(
+  projectId,
+  accountId = NULL,
+  type = c("serviceAccount", "user", "group")
+)
 
 gar_service_key(
   accountId,
@@ -31,6 +37,10 @@ gar_service_key(
 )
 
 gar_service_key_list(accountId, projectId)
+
+gar_service_list(projectId)
+
+gar_service_get(accountId, projectId)
 }
 \arguments{
 \item{accountId}{The service accountId}
@@ -43,11 +53,14 @@ gar_service_key_list(accountId, projectId)
 
 \item{accountIds}{A vector of accountIds in the form \code{accountId@projectid.iam.gserviceaccount.com}}
 
-\item{roles}{A character vector of roles to give the accountIds e.g. \code{roles/editor} - see list of roles here \url{https://cloud.google.com/iam/docs/understanding-roles#predefined_roles}}
+\item{roles}{A character vector of roles to give the accountIds e.g. \code{roles/editor} - see list of roles here \url{https://cloud.google.com/iam/docs/understanding-roles#predefined_roles} or in your GCP console \code{https://console.cloud.google.com/iam-admin/roles/details/roles}}
 
 \item{type}{The type of accountId to add role for - e.g. \code{user:mark@me.com} or \code{serviceAccount:accountId@projectid.iam.gserviceaccount.com}}
 
 \item{file}{The file to download the private JSON key to}
+}
+\value{
+If it already exists, returns it via \link{gar_service_get}, else creates the service key
 }
 \description{
 These functions let you create a service JSON key from an OAuth2 login.  You can then assign it roles and do a one time download of a service account key to use for authentication in other Google APIs
@@ -55,14 +68,32 @@ These functions let you create a service JSON key from an OAuth2 login.  You can
 \details{
 It will download the existing roles, and append the role you add to it here.
 
-
+If you supply an accountId to \code{gar_service_get_roles} then it will return only those roles that accountId has.
 }
 \examples{
+
+\dontrun{
+
+# all roles
+projectId <- gar_set_client(
+                json = Sys.getenv("GAR_CLIENT_JSON"), 
+                scopes = "https://www.googleapis.com/auth/cloud-platform")
+gar_service_get_roles(projectId)
+
+# roles for one accountId
+gar_service_get_roles(
+    projectId, 
+    accountId = "1080525199262@cloudbuild.gserviceaccount.com")
+
+}
 \dontrun{
  library(googleAuthR)
  gar_set_client(scopes = "https://www.googleapis.com/auth/cloud-platform")
  gar_auth()
  gar_service_create("test12345678", "my-project")
+ 
+ gar_service_get("test12345678@my-project.iam.gserviceaccount.com", 
+                 projectId = "my-project")
  
  gar_service_grant_roles("test12345678@my-project.iam.gserviceaccount.com",
                          role = "roles/editor",
@@ -70,13 +101,21 @@ It will download the existing roles, and append the role you add to it here.
  
  gar_service_key("test12345678", "my-project", "my-auth.json")
  
+ gar_service_list("my-project")
+ 
  gar_service_key_list("test12345678", "my-project")
 }
 }
 \seealso{
+Combine these functions to provision emails in one step with \link{gar_service_provision}
+
 \url{https://cloud.google.com/resource-manager/reference/rest/v1/projects/setIamPolicy}
 
 \url{https://cloud.google.com/resource-manager/reference/rest/v1/projects/setIamPolicy}
 
 https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts.keys/create
+
+Other IAM functions: 
+\code{\link{gar_service_provision}()}
 }
+\concept{IAM functions}

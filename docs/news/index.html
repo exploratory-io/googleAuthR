@@ -81,13 +81,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAuthR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/setup.html">
+    <span class="fa fa-child fa-lg"></span>
+     
+    Setup
+  </a>
+</li>
+<li>
   <a href="../articles/google-authentication-types.html">
     <span class="fa fa-sign-in fa-lg"></span>
      
@@ -163,9 +170,51 @@
       <small>Source: <a href='https://github.com/MarkEdmondson1234/googleAuthR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="googleauthr-1-2-0" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0">
-<a href="#googleauthr-1-2-0" class="anchor"></a>googleAuthR 1.2.0<small> Unreleased </small>
+    <div id="googleauthr-1-4-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0">
+<a href="#googleauthr-1-4-0" class="anchor"></a>googleAuthR 1.4.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fix batching when response has a blank line in first line</li>
+<li>Retry on 408 status codes (<a href='https://github.com/MarkEdmondson1234/googleAuthR/issues/199'>#199</a>)</li>
+<li>Add filter down to roles for one accountId in <code><a href="../reference/gar_service_create.html">gar_service_get_roles()</a></code>
+</li>
+<li>Prettier startup messages via <code>cli</code>
+</li>
+<li>Make setup flow easier without needing so many R restarts</li>
+</ul>
+</div>
+    <div id="googleauthr-1-3-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.1">
+<a href="#googleauthr-1-3-1" class="anchor"></a>googleAuthR 1.3.1<small> 2020-12-05 </small>
+</h1>
+<ul>
+<li>Fix <code><a href="../reference/gar_set_client.html">gar_set_client()</a></code> returning web-project id if expecting project id and both env arguments are set.</li>
+<li>Fix <code><a href="../reference/gar_service_provision.html">gar_service_provision()</a></code> and <code><a href="../reference/gar_service_create.html">gar_service_get()</a></code> as API error message changed (<a href='https://github.com/MarkEdmondson1234/googleAuthR/issues/197'>#197</a>)</li>
+</ul>
+</div>
+    <div id="googleauthr-1-3-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0">
+<a href="#googleauthr-1-3-0" class="anchor"></a>googleAuthR 1.3.0<small> 2020-06-15 </small>
+</h1>
+<ul>
+<li>Let you supply your own URL for discovery documents in <code><a href="../reference/gar_discovery_api.html">gar_discovery_api()</a></code>
+</li>
+<li>Change defaults on <code><a href="../reference/gar_create_package.html">gar_create_package()</a></code> to check = FALSE, github=FALSE</li>
+<li>Add class ‘list’ to <code>gar_discovery_*()</code> objects so they work with <code>jsonlite</code>
+</li>
+<li>Add <code><a href="../reference/gar_service_create.html">gar_service_list()</a></code> and <code><a href="../reference/gar_service_create.html">gar_service_get()</a></code>
+</li>
+<li>If using <code><a href="../reference/gar_service_create.html">gar_service_create()</a></code> and it already exists, will return existing via <code><a href="../reference/gar_service_create.html">gar_service_get()</a></code>
+</li>
+<li>Move the setup wizard functions from <code>googleCloudRunner</code> to <code>googleAuthR</code> so they are available for all packages.</li>
+<li>Remove deprecated <code>new_user</code> param from <code><a href="../reference/gar_auth.html">gar_auth()</a></code>
+</li>
+</ul>
+</div>
+    <div id="googleauthr-1-2-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.1">
+<a href="#googleauthr-1-2-1" class="anchor"></a>googleAuthR 1.2.1<small> 2020-04-26 </small>
 </h1>
 <ul>
 <li>Add <code>gar_scope_config</code>
@@ -180,6 +229,7 @@
 <li>Fix <code><a href="../reference/gar_debug_parsing.html">gar_debug_parsing()</a></code> message</li>
 <li>Remove deprecated <code>gar_auth_jsUI</code> since it causes an issue when used</li>
 <li>Add functions <code>gar_service_*</code> to provision service accounts via R (<a href='https://github.com/MarkEdmondson1234/googleAuthR/issues/178'>#178</a>)</li>
+<li>Remove OAuth2 login parameter <code>approval_prompt</code> as its replaced by <code>prompt</code> (<a href='https://github.com/MarkEdmondson1234/googleAuthR/issues/177'>#177</a> - thanks @<a href="mailto:OuNao/@rasmes" class="email">OuNao/@rasmes</a>/@hugovk)</li>
 </ul>
 </div>
     <div id="googleauthr-v1-1-1" class="section level1">
@@ -409,8 +459,6 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Add link to <a href="https://mark.shinyapps.io/googleAuthRexample/">example shiny app</a>
-</li>
 <li>Add <code><a href="https://rdrr.io/r/base/options.html">option(googleAuthR.rawResponse)</a></code> - skip API checks on response - should now work</li>
 <li>A successfull request is now classed as all response codes matching ^20 e.g. 201, 204 etc.</li>
 </ul>
