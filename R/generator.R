@@ -112,6 +112,7 @@ gar_api_generator <- function(baseURI,
     with_shiny_env <- which(grepl("with_shiny", all_envs))
     ## gets the arguments of with_shiny
     if(any(with_shiny_env)){
+      warning("with_shiny() will be removed soon.  Replace with new Shiny auth functions detailed on the googleAuthR website")
       call_args <- as.list(match.call(definition = sys.function(with_shiny_env),
                                       call = sys.call(with_shiny_env),
                                       expand.dots = FALSE)[-1])
@@ -208,7 +209,7 @@ gar_api_generator <- function(baseURI,
         
         saveRDS(error_object, file = "gar_parse_error.rds")
         stop("API Data failed to parse.  
-             Wrote diagnostic object to 'gar_parse_error.rds', use googleAuthR::gar_debug_parse('gar_parse_error.rds') to 
+             Wrote diagnostic object to 'gar_parse_error.rds', use googleAuthR::gar_debug_parsing('gar_parse_error.rds') to 
              debug the data_parse_function.", call. = FALSE)
       } else {
         req <- reqtry
@@ -293,7 +294,7 @@ retryRequest <- function(f){
 
     myMessage("API returned error: ",paste(error), level = 2)
 
-    if(grepl("^5|429",status_code)){
+    if(grepl("^5|429|408",status_code)){
       try_attempts <- getOption("googleAuthR.tryAttempts")
       for(i in 1:try_attempts){
         myMessage("Trying again: ", i, " of ", try_attempts, level = 3)
@@ -410,6 +411,7 @@ check_body <- function(arg_list, the_body, request_type){
 
     ## if verbose = 0 then write the JSON body to a file
     if(getOption("googleAuthR.verbose") == 0){
+      class(the_body) <- c(class(the_body), "list")
       write_out <- list(url = arg_list$url,
                         request_type = request_type,
                         body_json = jsonlite::toJSON(the_body, auto_unbox=T))

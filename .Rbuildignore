@@ -24,3 +24,7 @@ secrets\.R
 ^revdep$
 ^docs$
 ^tests$
+^Dockerfile$
+^.github$
+^cloud_build$
+^cloudbuild\.yml$

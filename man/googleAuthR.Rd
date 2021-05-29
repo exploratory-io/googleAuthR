@@ -3,10 +3,9 @@
 \docType{package}
 \name{googleAuthR}
 \alias{googleAuthR}
-\alias{googleAuthR-package}
 \title{googleAuthR: Easy Authentication with Google OAuth2 APIs}
 \description{
-Get more details on the \href{http://code.markedmondson.me/googleAuthR/}{googleAuthR website}.
+Get more details on the \href{https://code.markedmondson.me/googleAuthR/}{googleAuthR website}.
 }
 \section{Default options}{
 

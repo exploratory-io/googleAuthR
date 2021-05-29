@@ -10,7 +10,6 @@
 #' @param package The name of the package authenticating
 #' @param cache Where to store authentication tokens
 #' @param use_oob Whther to use OOB browserless authetication
-#' @param new_user Deprecated, not used
 #' @param skip_fetch Flag to control if you want to skip token_fetch
 #'
 #' @return an OAuth token object, specifically a
@@ -52,12 +51,7 @@ gar_auth <- function(token = NULL,
                      cache = gargle::gargle_oauth_cache(),
                      use_oob = gargle::gargle_oob_default(),
                      package = "googleAuthR",
-                     new_user = NULL,
                      skip_fetch = FALSE) {
-  
-  if(!is.null(new_user)){
-    warning("Argument new_user is deprecated and will be removed next release.")
-  }
   
   # file locations to read existing httr tokens (legacy compatibility)
   if(is.string(token) && is.readable(token)){
@@ -68,7 +62,7 @@ gar_auth <- function(token = NULL,
   }
   
   # set scopes to options for backward compatibility  
-  if(!is.null(scopes) && scopes != ""){
+  if(!is.null(scopes) && any(scopes != "")){
     options(googleAuthR.scopes.selected = scopes)
   }
   

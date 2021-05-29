@@ -11,7 +11,7 @@
 #' @param client.secret client.secret
 #' @param scope API scopes
 #' @param access_type whether to keep the token
-#' @param approval_prompt Auto-login if user is recognised or always force signin
+#' @param prompt Auto-login if user is recognised or always force signin
 #' 
 #' @export
 #' @family pre-load shiny authentication
@@ -21,9 +21,9 @@ gar_shiny_auth_url <- function(req,
                                client.secret = getOption("googleAuthR.webapp.client_secret"),
                                scope         = getOption("googleAuthR.scopes.selected"),
                                access_type = c("online","offline"),
-                               approval_prompt = c("auto","force")) {
+                               prompt = c("consent", "select_account", "both", "none")) {
   access_type <- match.arg(access_type)
-  approval_prompt <- match.arg(approval_prompt)
+  prompt <- match.arg(prompt)
   
   url_redirect <- workout_redirect(req)
 
@@ -33,7 +33,7 @@ gar_shiny_auth_url <- function(req,
                        client.secret = client.secret,
                        scope         = scope,
                        access_type   = access_type,
-                       approval_prompt = approval_prompt)
+                       prompt = prompt)
   
 }
 
@@ -78,7 +78,7 @@ workout_redirect <- function(req){
 #' 
 #' @export
 #' 
-#' @author Based on a gist by Joe Cheng, RStudio
+#' @author Based on \href{https://gist.github.com/jcheng5/44bd750764713b5a1df7d9daf5538aea}{this gist} by Joe Cheng, RStudio
 #' 
 #' @examples 
 #' 

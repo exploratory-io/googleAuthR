@@ -1,3 +1,39 @@
+# googleAuthR 1.4.0
+
+* Fix batching when response has a blank line in first line
+* Retry on 408 status codes (#199)
+* Add filter down to roles for one accountId in `gar_service_get_roles()`
+* Prettier startup messages via `cli`
+* Make setup flow easier without needing so many R restarts
+
+# googleAuthR 1.3.1
+
+* Fix `gar_set_client()` returning web-project id if expecting project id and both env arguments are set.
+* Fix `gar_service_provision()` and `gar_service_get()` as API error message changed (#197)
+
+# googleAuthR 1.3.0
+
+* Let you supply your own URL for discovery documents in `gar_discovery_api()`
+* Change defaults on `gar_create_package()` to check = FALSE, github=FALSE
+* Add class 'list' to `gar_discovery_*()` objects so they work with `jsonlite`
+* Add `gar_service_list()` and `gar_service_get()`
+* If using `gar_service_create()` and it already exists, will return existing via `gar_service_get()`
+* Move the setup wizard functions from `googleCloudRunner` to `googleAuthR` so they are available for all packages.
+* Remove deprecated `new_user` param from `gar_auth()`
+
+# googleAuthR 1.2.1
+
+* Add `gar_scope_config` 
+* Add Docker build available at `gcr.io/gcer-public/googleauthr`
+* More API error feedback if using googleAuthR.verbose < 3
+* Auto-auth should succeed if one of the scopes needed is present
+* Set default scopes to "https://www.googleapis.com/auth/cloud-platform" in `gar_gce_auth`
+* Corrected and clarified `googleSignIn` documentation (#171, @jonthegeek).
+* Fix `gar_debug_parsing()` message
+* Remove deprecated `gar_auth_jsUI` since it causes an issue when used 
+* Add functions `gar_service_*` to provision service accounts via R (#178)
+* Remove OAuth2 login parameter `approval_prompt` as its replaced by `prompt` (#177 - thanks @OuNao/@rasmes/@hugovk)
+
 # googleAuthR v1.1.1
 
 * Allow to be used by R 3.3 via custom `isFALSE` function (#158 - thanks @matthijsvanderloos)
@@ -137,7 +173,6 @@
 
 ## Major changes
 
-* Add link to [example shiny app](https://mark.shinyapps.io/googleAuthRexample/)
 * Add `option(googleAuthR.rawResponse)` - skip API checks on response - should now work
 * A successfull request is now classed as all response codes matching ^20 e.g. 201, 204 etc.
 

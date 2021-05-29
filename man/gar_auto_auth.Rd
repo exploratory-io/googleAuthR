@@ -4,17 +4,12 @@
 \alias{gar_auto_auth}
 \title{Perform auto authentication}
 \usage{
-gar_auto_auth(required_scopes, no_auto = NULL,
-  environment_var = "GAR_AUTH_FILE", new_user = NULL)
+gar_auto_auth(required_scopes, environment_var = "GAR_AUTH_FILE")
 }
 \arguments{
 \item{required_scopes}{Required scopes needed to authenticate - needs to match at least one}
 
-\item{no_auto}{If TRUE, ignore auto-authentication settings}
-
-\item{environment_var}{Name of environment var that contains auth file path}
-
-\item{new_user}{Deprecated, not used
+\item{environment_var}{Name of environment var that contains auth file path
 
 The authentication file can be a \code{.httr-oauth} file created via \link{gar_auth} 
   or a Google service JSON file downloaded from the Google API credential console, 
@@ -36,10 +31,12 @@ This helper function lets you use environment variables to auto-authenticate on 
 \seealso{
 Help files for \link{.onAttach}
 
-Other authentication functions: \code{\link{gar_attach_auto_auth}},
-  \code{\link{gar_auth_service}}, \code{\link{gar_auth}},
-  \code{\link{gar_gce_auth}},
-  \code{\link{get_google_token}},
-  \code{\link{token_exists}}
+Other authentication functions: 
+\code{\link{gar_attach_auto_auth}()},
+\code{\link{gar_auth_service}()},
+\code{\link{gar_auth}()},
+\code{\link{gar_gce_auth}()},
+\code{\link{get_google_token}()},
+\code{\link{token_exists}()}
 }
 \concept{authentication functions}

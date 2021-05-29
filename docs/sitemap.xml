@@ -79,7 +79,40 @@
     <loc>https://code.markedmondson.me/googleAuthR//reference/gar_has_token.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_scope_config.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_service_create.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_service_provision.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_auth_check.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_auth_key.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_clientid.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_edit_renviron.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_env_check.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_get_authenv.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_menu.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAuthR//reference/gar_setup_menu_do.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html</loc>

@@ -1,26 +1,16 @@
 ## Test environments
-* local OS X install, R 3.6.1
-* Ubuntu 14.04.5 LTS (on travis-ci), R 3.6.1
+* local OS X install, R 3.6.3
+* Ubuntu 14.04.5 LTS (on travis-ci), R 3.6.3
 * Windows Server 2008 R2 SP1, R-devel, 32/64 bit (on r-hub)
   
 ## R CMD check results
 
-This is a patch to fix a bug that prevented some downstream packages to load in certain circumstances. 
+0 errors | 0 warnings | 0 notes 
 
-## Downstream dependencies
-I have also run R CMD check on downstream dependencies of googleAuthR
+## revdepcheck results
 
-The results were:
+We checked 14 reverse dependencies (6 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
-✔ googleAnalyticsR 0.6.0                 ── E: 0     | W: 0     | N: 0                         
-✔ bigQueryR 0.4.0                        ── E: 0     | W: 0     | N: 0                            
-✔ googleCloudStorageR 0.5.0              ── E: 0     | W: 0     | N: 0                            
-✔ googleCloudVisionR 0.1.0               ── E: 0     | W: 0     | N: 0                         
-✔ googleComputeEngineR 0.3.0             ── E: 0     | W: 0     | N: 0                            
-✔ HCABrowser 1.0.1                       ── E: 0     | W: 0     | N: 0                            
-✔ googlePrintr 0.0.1                     ── E: 0     | W: 0     | N: 1                            
-✔ searchConsoleR 0.4.0                   ── E: 1     | W: 0     | N: 0                         
-✔ text2speech 0.2.5                      ── E: 0     | W: 0     | N: 0                           
-✔ googleLanguageR 0.2.0                  ── E: 0     | W: 0     | N: 0
-
+ * We saw 0 new problems
+ * We failed to check 0 packages
   
