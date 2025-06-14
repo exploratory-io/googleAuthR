@@ -239,7 +239,7 @@ get_google_token <- function() {
 #' @family authentication functions
 #' @importFrom jsonlite fromJSON
 #' @importFrom gargle credentials_service_account
-gar_auth_service <- function(json_file, 
+gar_auth_service_ <- function(json_file, 
                              scope = getOption("googleAuthR.scopes.selected")){
 
   secrets  <- fromJSON(json_file)
@@ -264,6 +264,61 @@ gar_auth_service <- function(json_file,
   
   invisible(token)
   
+}
+#' JSON service account authentication
+#' 
+#' @description As well as OAuth2 authentication, 
+#'   you can authenticate without user interaction via Service accounts.  
+#'   This involves downloading a secret JSON key with the authentication
+#'   details.
+#'   
+#'   To use, go to your Project in 
+#'     the https://console.developers.google.com/apis/credentials/serviceaccountkey
+#'     
+#'     and select JSON Key type.  Save the file 
+#'   to your computer and call it via supplying 
+#'   the file path to the \code{json_file} parameter.
+#'   
+#'   Navigate to it via: 
+#'     Google Dev Console > Credentials > New credentials > Service account Key > 
+#'        Select service account > Key type = JSON
+#' 
+#' @param json_file the JSON file downloaded from Google Developer Console
+#' @param scope Scope of the JSON file auth if needed
+#' 
+#' @seealso https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+#' 
+#' @return (Invisible) Sets authentication token
+#' 
+#' @seealso 
+#' https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+#' 
+#' @export
+#' @family authentication functions
+#' @importFrom jsonlite fromJSON
+#' @importFrom gargle credentials_service_account
+gar_auth_service <- function (email = gargle::gargle_oauth_email(), json_file = NULL, 
+                                     scopes = c("https://www.googleapis.com/auth/bigquery", "https://www.googleapis.com/auth/cloud-platform"), 
+                                     cache = gargle::gargle_oauth_cache(), use_oob = gargle::gargle_oob_default(), 
+                                     token = NULL) 
+{
+  if (!missing(email) && !missing(json_file)) {
+    cli::cli_warn(c("It is very unusual to provide both {.arg email} and \\\n       {.arg path} to {.fun bq_auth}.", 
+                    "They relate to two different auth methods.", "The {.arg path} argument is only for a service account token.", 
+                    "If you need to specify your own OAuth client, use \\\n      {.fun bq_auth_configure}."))
+  }
+  force(token)
+  cred <- gargle::token_fetch(scopes = scopes, app = bq_oauth_client() %||% 
+                                gargle::tidyverse_client(), email = email, path = json_file, 
+                              package = "bigrquery", cache = cache, use_oob = use_oob, 
+                              token = token)
+  if (!inherits(cred, "Token2.0")) {
+    stop("Can't get Google credentials.\n",  
+         call. = FALSE)
+  }
+  .auth$set_cred(cred)
+  .auth$set_auth_active(TRUE)
+  invisible()
 }
 
 is.tokenservice <- function(x){
